@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Check out repository
@@ -21,14 +21,5 @@ jobs:
           java-version: '22'
           cache: gradle
 
-      - name: Install Chromium for browser tests
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser || sudo apt-get install -y chromium
-          echo "CHROME_BIN=$(which chromium-browser || which chromium || which google-chrome)" >> $GITHUB_ENV
-
-      - name: Grant execute permission for Gradle wrapper
-        run: chmod +x gradlew
-
       - name: Run tests
-        run: ./gradlew test
+        run: .\gradlew.bat test
