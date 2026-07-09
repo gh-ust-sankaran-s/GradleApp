@@ -16,7 +16,7 @@ public class Config {
     }
 
     public static boolean headless(){
-        return Boolean.parseBoolean(System.getProperty("headless","falses"));
+        return Boolean.parseBoolean(System.getProperty("headless", String.valueOf(Boolean.parseBoolean(System.getenv("CI")))));
     }
 
 }

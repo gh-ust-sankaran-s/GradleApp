@@ -80,6 +80,13 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+
+    if (System.getenv("CI") != null) {
+        systemProperty("headless", "true")
+        filter {
+            includeTestsMatching("postgreSqlCon.OrderTest")
+        }
+    }
 }
 
 java {

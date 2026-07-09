@@ -13,7 +13,7 @@ public final class DriverFactory {
     public static WebDriver createDriver(){
         ChromeOptions options = new ChromeOptions();
         if(Config.headless()){
-            options.addArguments("--headless=new");
+            options.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu", "--remote-allow-origins=*");
         }
         options.addArguments("--window-size=1440,900");
 //        if (Config.gridEnabled()){
