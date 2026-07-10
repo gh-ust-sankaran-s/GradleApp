@@ -1,6 +1,7 @@
 plugins {
     java
     kotlin("jvm") version "2.2.0"
+    id("io.qameta.allure") version "2.12.0"
 }
 
 group = "org.sdet.testing.app"
