@@ -49,6 +49,14 @@ jobs:
           allure_history: allure-history
           keep_reports: 20
 
+      - name: Add Allure report link to summary
+        if: always()
+        run: |
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          OWNER="${GITHUB_REPOSITORY_OWNER}"
+          echo "## Allure Report" >> "$GITHUB_STEP_SUMMARY"
+          echo "View the latest report: https://${OWNER}.github.io/${REPO_NAME}/latest/index.html" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Upload Allure results artifact
         if: always()
         uses: actions/upload-artifact@v4
