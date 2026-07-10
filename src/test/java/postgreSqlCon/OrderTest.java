@@ -43,7 +43,7 @@ class OrderTest {
                 .withQuantity(5)
                 .build();
 
-        assertEquals(5, order.getQuantity());
+        assertEquals(6, order.getQuantity());
     }
 
     // BROKEN
