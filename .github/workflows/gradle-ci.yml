@@ -60,6 +60,22 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./allure-report
           publish_branch: gh-pages
+        
+      
+      - name: Verify Allure History
+        if: always()
+        run: |
+          echo "=== ALLURE HISTORY ==="
+          ls -R allure-history || true
+
+      - name: Deploy Allure Report to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-history
+          publish_branch: gh-pages
+
 
       - name: Report Link
         if: always()
