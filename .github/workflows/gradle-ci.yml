@@ -1,20 +1,14 @@
-name: Gradle CI
+name: Java CI
 
 on:
   push:
     branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-  workflow_dispatch:
-  schedule:
-    - cron: '0 8 * * *'
-
-permissions:
-  contents: write
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Check out repository
@@ -22,8 +16,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Checkout gh-pages branch
-        if: always()
+      - name: Check out gh-pages branch
         uses: actions/checkout@v4
         with:
           ref: gh-pages
@@ -31,47 +24,51 @@ jobs:
           fetch-depth: 0
         continue-on-error: true
 
-      - name: Set up JDK 22
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '22'
+          java-version: '21'
           cache: gradle
 
-      - name: Make Gradle wrapper executable
-        run: chmod +x ./gradlew
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10.2'
 
       - name: Run tests
         id: tests
-        run: ./gradlew test --tests "postgreSqlCon.OrderTest"
+        run: ./gradlew clean test --no-configuration-cache
         env:
           CI: true
         continue-on-error: true
 
-      - name: Generate Allure report
+      - name: Generate Allure Report
         if: always()
         uses: simple-elf/allure-report-action@master
         with:
           allure_results: build/allure-results
+          gh_pages: gh-pages
           allure_report: allure-report
           allure_history: allure-history
           keep_reports: 20
 
-      - name: Deploy Allure report to GitHub Pages
+      - name: Deploy to GitHub Pages
         if: always()
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./allure-report
           publish_branch: gh-pages
           user_name: github-actions[bot]
           user_email: github-actions[bot]@users.noreply.github.com
+          allow_empty_commit: true
 
       - name: Report Link
         if: always()
         run: |
-          echo "## Allure Report" >> "$GITHUB_STEP_SUMMARY"
-          echo "View the latest report: https://gh-ust-sankaran-s.github.io/GradleApp/" >> "$GITHUB_STEP_SUMMARY"
+          echo "Tests completed"
+          echo "Report: https://gh-ust-sankaran-s.github.io/GradleApp/"
 
       - name: Upload Allure results artifact
         if: always()
