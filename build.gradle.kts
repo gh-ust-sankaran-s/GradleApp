@@ -76,10 +76,14 @@ dependencies {
     testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
     testImplementation("org.testcontainers:junit-jupiter:$testcontainersVersion")
     testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
+
+    testImplementation("io.qameta.allure:allure-cucumber7-jvm")
+    testImplementation("io.qameta.allure:allure-junit5")
 }
 
 tasks.test {
     useJUnitPlatform()
+    systemProperty("allure.results.directory", "$buildDir/allure-results")
 
     if (System.getenv("CI") != null) {
         systemProperty("headless", "true")
