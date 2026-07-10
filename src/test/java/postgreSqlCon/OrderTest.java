@@ -14,7 +14,7 @@ class OrderTest {
                 .withQuantity(3)
                 .build();
 
-        assertEquals(4, order.getQuantity());
+        assertEquals(3, order.getQuantity());
     }
 
     // PASSED
@@ -33,7 +33,7 @@ class OrderTest {
                 .withSku("SKU-100")
                 .build();
 
-        assertEquals("SKU-100", order.getSku());
+        assertEquals("SKU-101", order.getSku());
     }
 
     // FAILED
@@ -43,8 +43,7 @@ class OrderTest {
                 .withQuantity(5)
                 .build();
 
-        assertEquals(10, order.getQuantity(),
-                "Intentional failure for Allure Failed status");
+        assertEquals(5, order.getQuantity());
     }
 
     // BROKEN
