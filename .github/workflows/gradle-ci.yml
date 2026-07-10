@@ -19,14 +19,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check out gh-pages branch
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          path: gh-pages
-          fetch-depth: 0
-        continue-on-error: true
-
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -42,6 +34,14 @@ jobs:
 
       - name: Run Tests
         run: ./gradlew clean test
+
+      - name: Check out gh-pages branch
+        uses: actions/checkout@v4
+        with:
+              ref: gh-pages
+              path: gh-pages
+              fetch-depth: 0
+        continue-on-error: true
 
       - name: Generate Allure Report
         if: always()
