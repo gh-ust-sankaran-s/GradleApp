@@ -19,13 +19,13 @@ jobs:
       contents: write
 
     steps:
-      # Checkout repository
+
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # Checkout gh-pages branch for Allure history
+
       - name: Checkout gh-pages
         if: always()
         continue-on-error: true
@@ -35,7 +35,7 @@ jobs:
           path: gh-pages
           fetch-depth: 0
 
-      # Setup Java
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
@@ -43,19 +43,18 @@ jobs:
           java-version: "21"
           cache: gradle
 
-      # Setup Gradle
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      # Make Gradle wrapper executable
+
       - name: Make gradlew Executable
         run: chmod +x ./gradlew
 
-      # Run tests
+
       - name: Run Tests
         run: ./gradlew clean test
 
-      # Generate Allure Report with history
+
       - name: Generate Allure Report
         if: always()
         uses: simple-elf/allure-report-action@master
@@ -66,7 +65,7 @@ jobs:
           allure_history: allure-history
           keep_reports: 20
 
-      # Verify generated report
+
       - name: Verify Allure Report
         if: always()
         run: |
@@ -78,7 +77,7 @@ jobs:
 
           test -f allure-history/index.html
 
-      # Upload report artifact
+
       - name: Upload Allure Report Artifact
         if: always()
         uses: actions/upload-artifact@v4
@@ -86,7 +85,7 @@ jobs:
           name: allure-report
           path: allure-history
 
-      # Deploy to GitHub Pages
+
       - name: Deploy Allure Report
         if: always()
         uses: peaceiris/actions-gh-pages@v4
@@ -95,7 +94,7 @@ jobs:
           publish_branch: gh-pages
           publish_dir: allure-history
 
-      # Print report URL
+
       - name: Report Link
         if: always()
         run: |

@@ -7,17 +7,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OrderTest {
 
-    // PASSED
     @Test
     void shouldCreateOrder() {
         Order order = OrderBuilder.anOrder()
                 .withQuantity(3)
                 .build();
 
-        assertEquals(3, order.getQuantity());
+        assertEquals(6, order.getQuantity());
     }
 
-    // PASSED
+
     @Test
     void shouldCreateDefaultOrder() {
         Order order = OrderFactory.anOrder();
@@ -26,7 +25,7 @@ class OrderTest {
         assertEquals("NEW", order.getStatus());
     }
 
-    // PASSED
+
     @Test
     void shouldSetSkuUsingBuilder() {
         Order order = OrderBuilder.anOrder()
@@ -36,7 +35,6 @@ class OrderTest {
         assertEquals("SKU-100", order.getSku());
     }
 
-    // FAILED
     @Test
     void shouldFailForIncorrectQuantity() {
         Order order = OrderBuilder.anOrder()
@@ -46,14 +44,14 @@ class OrderTest {
         assertEquals(6, order.getQuantity());
     }
 
-    // BROKEN
+
     @Test
     void shouldShowBrokenStatus() {
         throw new RuntimeException(
                 "Intentional exception for Allure Broken status");
     }
 
-    // SKIPPED
+
     @Disabled("Intentional skip for Allure report")
     @Test
     void shouldBeSkipped() {
