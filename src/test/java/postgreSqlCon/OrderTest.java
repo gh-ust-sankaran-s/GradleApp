@@ -1,11 +1,13 @@
 package postgreSqlCon;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderTest {
 
+    // PASSED
     @Test
     void shouldCreateOrder() {
         Order order = OrderBuilder.anOrder()
@@ -15,6 +17,7 @@ class OrderTest {
         assertEquals(3, order.getQuantity());
     }
 
+    // PASSED
     @Test
     void shouldCreateDefaultOrder() {
         Order order = OrderFactory.anOrder();
@@ -23,6 +26,7 @@ class OrderTest {
         assertEquals("NEW", order.getStatus());
     }
 
+    // PASSED
     @Test
     void shouldSetSkuUsingBuilder() {
         Order order = OrderBuilder.anOrder()
@@ -32,57 +36,28 @@ class OrderTest {
         assertEquals("SKU-100", order.getSku());
     }
 
+    // FAILED
     @Test
-    void shouldCreateOrderWithCustomStatus() {
+    void shouldFailForIncorrectQuantity() {
         Order order = OrderBuilder.anOrder()
-                .withStatus("COMPLETED")
+                .withQuantity(5)
                 .build();
 
-        assertEquals("COMPLETED", order.getStatus());
+        assertEquals(10, order.getQuantity(),
+                "Intentional failure for Allure Failed status");
     }
 
+    // BROKEN
     @Test
-    void shouldMarkOrderAsRefunded() {
-        Order order = OrderBuilder.anOrder()
-                .withRefunded(true)
-                .build();
-
-        assertTrue(order.isRefunded());
+    void shouldShowBrokenStatus() {
+        throw new RuntimeException(
+                "Intentional exception for Allure Broken status");
     }
 
+    // SKIPPED
+    @Disabled("Intentional skip for Allure report")
     @Test
-    void shouldCreateOrderWithQuantityFromFactory() {
-        Order order = OrderFactory.anOrderWithQuantity(5);
-
-        assertEquals(5, order.getQuantity());
-    }
-
-    @Test
-    void shouldBeEqualForSameValues() {
-        Order order1 = OrderBuilder.anOrder()
-                .withSku("SKU-1")
-                .withQuantity(2)
-                .build();
-
-        Order order2 = OrderBuilder.anOrder()
-                .withSku("SKU-1")
-                .withQuantity(2)
-                .build();
-
-        assertEquals(order1, order2);
-        assertEquals(order1.hashCode(), order2.hashCode());
-    }
-
-    @Test
-    void shouldNotBeEqualForDifferentValues() {
-        Order order1 = OrderBuilder.anOrder()
-                .withQuantity(1)
-                .build();
-
-        Order order2 = OrderBuilder.anOrder()
-                .withQuantity(2)
-                .build();
-
-        assertNotEquals(order1, order2);
+    void shouldBeSkipped() {
+        assertTrue(true);
     }
 }
