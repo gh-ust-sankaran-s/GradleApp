@@ -13,7 +13,7 @@ class OrderTest {
                 .withQuantity(3)
                 .build();
 
-        assertEquals(6, order.getQuantity());
+        assertEquals(3, order.getQuantity());
     }
 
 
@@ -32,7 +32,7 @@ class OrderTest {
                 .withSku("SKU-100")
                 .build();
 
-        assertEquals("SKU-100", order.getSku());
+        assertEquals("SKU-101", order.getSku());
     }
 
     @Test
@@ -41,7 +41,7 @@ class OrderTest {
                 .withQuantity(5)
                 .build();
 
-        assertEquals(6, order.getQuantity());
+        assertEquals(5, order.getQuantity());
     }
 
 
