@@ -1,0 +1,7 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","2","shouldShowBrokenStatus()","","2026-07-10","broken","2026-07-10","","postgreSqlCon.OrderTest","postgreSqlCon.OrderTest","shouldShowBrokenStatus"
+"","1","shouldSetSkuUsingBuilder()","","2026-07-10","passed","2026-07-10","","postgreSqlCon.OrderTest","postgreSqlCon.OrderTest","shouldSetSkuUsingBuilder"
+"","0","shouldBeSkipped()","","2026-07-10","skipped","2026-07-10","","postgreSqlCon.OrderTest","postgreSqlCon.OrderTest","shouldBeSkipped"
+"","27","shouldFailForIncorrectQuantity()","","2026-07-10","failed","2026-07-10","","postgreSqlCon.OrderTest","postgreSqlCon.OrderTest","shouldFailForIncorrectQuantity"
+"","38","shouldCreateOrder()","","2026-07-10","passed","2026-07-10","","postgreSqlCon.OrderTest","postgreSqlCon.OrderTest","shouldCreateOrder"
+"","4","shouldCreateDefaultOrder()","","2026-07-10","passed","2026-07-10","","postgreSqlCon.OrderTest","postgreSqlCon.OrderTest","shouldCreateDefaultOrder"
