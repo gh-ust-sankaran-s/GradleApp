@@ -16,7 +16,6 @@ class OrderTest {
         assertEquals(3, order.getQuantity());
     }
 
-
     @Test
     void shouldCreateDefaultOrder() {
         Order order = OrderFactory.anOrder();
@@ -24,7 +23,6 @@ class OrderTest {
         assertEquals(1, order.getQuantity());
         assertEquals("NEW", order.getStatus());
     }
-
 
     @Test
     void shouldSetSkuUsingBuilder() {
@@ -44,17 +42,22 @@ class OrderTest {
         assertEquals(5, order.getQuantity());
     }
 
-
     @Test
     void shouldShowBrokenStatus() {
         throw new RuntimeException(
                 "Intentional exception for Allure Broken status");
     }
 
-
     @Disabled("Intentional skip for Allure report")
     @Test
     void shouldBeSkipped() {
         assertTrue(true);
+    }
+
+    @Disabled("Second skipped test for Allure report")
+    @Test
+    void shouldAlsoBeSkipped() {
+        Order order = OrderFactory.anOrder();
+        assertNotNull(order);
     }
 }
