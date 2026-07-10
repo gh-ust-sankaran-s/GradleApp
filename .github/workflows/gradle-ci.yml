@@ -38,10 +38,19 @@ jobs:
 
       - name: Run tests
         id: tests
-        run: ./gradlew clean test --no-configuration-cache
+        run: ./gradlew clean test --no-configuration-cache -Dallure.results.directory=build/allure-results
         env:
           CI: true
         continue-on-error: true
+
+      - name: Ensure Allure results directory
+        if: always()
+        run: |
+          mkdir -p build/allure-results
+          echo "Build folder listing:"
+          ls -la build || true
+          echo "Allure results listing:"
+          ls -la build/allure-results || true
 
       - name: Generate Allure Report
         if: always()

@@ -60,6 +60,8 @@ dependencies {
     // Allure
     testImplementation(platform("io.qameta.allure:allure-bom:$allureVersion"))
     testImplementation("io.qameta.allure:allure-cucumber7-jvm")
+    testImplementation("io.qameta.allure:allure-junit5")
+ 
 
     // Extent Reports
     testImplementation("com.aventstack:extentreports:$extentVersion")
@@ -82,15 +84,19 @@ dependencies {
     testImplementation("io.qameta.allure:allure-junit5")
 }
 
-tasks.test {
+tasks.withType<Test> {
     useJUnitPlatform()
     systemProperty("allure.results.directory", "$buildDir/allure-results")
 
+    testLogging {
+        events("passed", "skipped", "failed")
+        showStandardStreams = true
+    }
+
     if (System.getenv("CI") != null) {
         systemProperty("headless", "true")
-        filter {
-            includeTestsMatching("postgreSqlCon.OrderTest")
-        }
+        // Optionally narrow tests on CI by uncommenting the filter block below
+        // filter { includeTestsMatching("postgreSqlCon.OrderTest") }
     }
 }
 
