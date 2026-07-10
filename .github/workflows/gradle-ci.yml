@@ -60,16 +60,16 @@ jobs:
           allure_history: allure-history
           keep_reports: 20
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages (publish report at site root)
         if: always()
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-history
+          publish_dir: ./allure-report
           publish_branch: gh-pages
           user_name: github-actions[bot]
           user_email: github-actions[bot]@users.noreply.github.com
-          allow_empty_commit: true
+          force_orphan: true
 
       - name: Report Link
         if: always()
