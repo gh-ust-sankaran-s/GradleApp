@@ -111,7 +111,6 @@ kotlin {
 }
 
 tasks.test{
-    name = "Run Allure Test"
     include("**/OrderTest.class")
     maxParallelForks = 1
 }
