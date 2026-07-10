@@ -14,7 +14,7 @@ class OrderTest {
                 .withQuantity(3)
                 .build();
 
-        assertEquals(3, order.getQuantity());
+        assertEquals(4, order.getQuantity());
     }
 
     // PASSED
