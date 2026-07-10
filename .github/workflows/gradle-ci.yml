@@ -35,13 +35,11 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.10.2'
+      - name: Grant execute permission
+        run: chmod +x gradlew
 
       - name: Run tests
-        id: tests
-        run: ./gradlew clean test --no-configuration-cache -Dallure.results.directory=build/allure-results
-        env:
-          CI: true
-        continue-on-error: true
+        run: ./gradlew test
 
       - name: Ensure Allure results directory
         if: always()

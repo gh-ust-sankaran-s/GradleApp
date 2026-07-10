@@ -109,3 +109,9 @@ java {
 kotlin {
     jvmToolchain(22)
 }
+
+tasks.test{
+    name = "Run Allure Test"
+    include("**/OrderTest.class")
+    maxParallelForks = 1
+}
