@@ -35,12 +35,13 @@ jobs:
       - name: Run Tests
         run: ./gradlew clean test
 
-      - name: Check out gh-pages branch
+      - name: Checkout gh-pages
+        if: always()
         uses: actions/checkout@v4
         with:
-              ref: gh-pages
-              path: gh-pages
-              fetch-depth: 0
+          ref: gh-pages
+          path: gh-pages
+          fetch-depth: 0
         continue-on-error: true
 
       - name: Generate Allure Report
@@ -64,13 +65,5 @@ jobs:
       - name: Report Link
         if: always()
         run: |
-          echo "::notice::Allure Report Published Successfully"
+          echo "::notice::Allure Report:"
           echo "::notice::https://gh-ust-sankaran-s.github.io/GradleApp/"
-
-      - name: Upload Allure Results Artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: build/allure-results
-          if-no-files-found: ignore
