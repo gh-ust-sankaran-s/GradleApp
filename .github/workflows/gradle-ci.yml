@@ -2,11 +2,14 @@ name: Java CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches:
+      - main
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     permissions:
       contents: write
 
@@ -28,27 +31,17 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: "21"
           cache: gradle
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.10.2'
-      - name: Grant execute permission
+
+      - name: Grant execute permission to Gradle Wrapper
         run: chmod +x gradlew
 
-      - name: Run tests
-        run: ./gradlew test
-
-      - name: Ensure Allure results directory
-        if: always()
-        run: |
-          mkdir -p build/allure-results
-          echo "Build folder listing:"
-          ls -la build || true
-          echo "Allure results listing:"
-          ls -la build/allure-results || true
+      - name: Run Tests
+        run: ./gradlew clean test
 
       - name: Generate Allure Report
         if: always()
@@ -60,24 +53,21 @@ jobs:
           allure_history: allure-history
           keep_reports: 20
 
-      - name: Deploy to GitHub Pages (publish report at site root)
+      - name: Deploy Allure Report to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./allure-report
           publish_branch: gh-pages
-          user_name: github-actions[bot]
-          user_email: github-actions[bot]@users.noreply.github.com
-          force_orphan: true
 
       - name: Report Link
         if: always()
         run: |
-          echo "Tests completed"
-          echo "Report: https://gh-ust-sankaran-s.github.io/GradleApp/"
+          echo "::notice::Allure Report Published Successfully"
+          echo "::notice::https://gh-ust-sankaran-s.github.io/GradleApp/"
 
-      - name: Upload Allure results artifact
+      - name: Upload Allure Results Artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:

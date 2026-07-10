@@ -61,7 +61,6 @@ dependencies {
     testImplementation(platform("io.qameta.allure:allure-bom:$allureVersion"))
     testImplementation("io.qameta.allure:allure-cucumber7-jvm")
     testImplementation("io.qameta.allure:allure-junit5")
- 
 
     // Extent Reports
     testImplementation("com.aventstack:extentreports:$extentVersion")
@@ -79,14 +78,21 @@ dependencies {
     testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
     testImplementation("org.testcontainers:junit-jupiter:$testcontainersVersion")
     testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
+}
 
-    testImplementation("io.qameta.allure:allure-cucumber7-jvm")
-    testImplementation("io.qameta.allure:allure-junit5")
+allure {
+    report {
+        version.set(allureVersion)
+    }
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
-    systemProperty("allure.results.directory", "$buildDir/allure-results")
+
+    systemProperty(
+        "allure.results.directory",
+        "$buildDir/allure-results"
+    )
 
     testLogging {
         events("passed", "skipped", "failed")
@@ -95,22 +101,20 @@ tasks.withType<Test> {
 
     if (System.getenv("CI") != null) {
         systemProperty("headless", "true")
-        // Optionally narrow tests on CI by uncommenting the filter block below
-        // filter { includeTestsMatching("postgreSqlCon.OrderTest") }
     }
 }
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(22))
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
 
 kotlin {
-    jvmToolchain(22)
+    jvmToolchain(21)
 }
 
-tasks.test{
+tasks.test {
     include("**/OrderTest.class")
     maxParallelForks = 1
 }
