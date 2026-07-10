@@ -33,7 +33,7 @@ class OrderTest {
                 .withSku("SKU-100")
                 .build();
 
-        assertEquals("SKU-101", order.getSku());
+        assertEquals("SKU-100", order.getSku());
     }
 
     // FAILED
